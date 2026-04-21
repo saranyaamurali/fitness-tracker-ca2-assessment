@@ -1,41 +1,46 @@
-import { createContext, useContext, useReducer, useEffect } from "react";
-import ActivityReducer from "../reducer/ActivityReducer";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { getToken, getDataset } from "../api/api";
+import ActivityReducer, { initialState } from "../reducer/ActivityReducer";
 
-const initialState = {
-  activities: [],
-  loading: true,
-};
-
-export const ActivityContext = createContext();
+export const ActivityContext = createContext(null);
 
 export const ActivityProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ActivityReducer, initialState);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchActivities = async () => {
+      dispatch({ type: "FETCH_START" });
       try {
-        const tokenRes = await getToken("e0323005", "570562", "setB");
-        const activities = await getDataset(tokenRes.token, tokenRes.dataUrl);
-        dispatch({ type: "SET_ACTIVITIES", payload: activities });
-      } catch (err) {
-        console.error("Error fetching data:", err.message);
+        const tokenRes = await getToken("E0323005", "570562", "setB");
+        const dataset = await getDataset(tokenRes.token, tokenRes.dataUrl);
+
+        if (!isMounted) return;
+        dispatch({ type: "FETCH_SUCCESS", payload: dataset });
+      } catch (error) {
+        if (!isMounted) return;
+        dispatch({ type: "FETCH_ERROR", payload: error?.message || "Unable to fetch activities." });
       }
     };
 
     fetchActivities();
+    return () => { isMounted = false; };
   }, []);
 
   return (
-    <ActivityContext.Provider
-      value={{
-        activities: state.activities,
-        loading: state.loading,
-      }}
-    >
+    <ActivityContext.Provider value={{
+      activities: state.activities,
+      loading: state.loading,
+      error: state.error,
+    }}>
       {children}
     </ActivityContext.Provider>
   );
 };
 
-export const useActivity = () => useContext(ActivityContext);
+export const useActivity = () => {
+  const context = useContext(ActivityContext);
+  if (!context) throw new Error("useActivity must be used within ActivityProvider");
+  return context;
+};

@@ -17,5 +17,10 @@ export const getDataset = async (token, dataUrl) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  return data.data;
+
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.data)) return data.data;
+  if (Array.isArray(data?.activities)) return data.activities;
+  if (Array.isArray(data?.data?.activities)) return data.data.activities;
+  return [];
 };

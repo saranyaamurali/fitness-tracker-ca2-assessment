@@ -1,14 +1,26 @@
+export const initialState = {
+  activities: [],
+  loading: true,
+  error: "",
+};
+
 const ActivityReducer = (state, action) => {
   switch (action.type) {
-    case "SET_ACTIVITIES":
+    case "FETCH_START":
+      return { ...state, loading: true, error: "" };
+
+    case "FETCH_SUCCESS":
       return {
         ...state,
         activities: Array.isArray(action.payload) ? action.payload : [],
         loading: false,
+        error: "",
       };
 
+    case "FETCH_ERROR":
+      return { ...state, loading: false, error: action.payload };
+
     default:
-      console.warn("Unknown action:", action.type);
       return state;
   }
 };
