@@ -39,12 +39,7 @@
   border: 1px solid #ddd;
   border-radius: 2px;
   background: #fff;
-  cursor: pointer;
   text-align: left;
-}
-
-.activity-card:hover {
-  background: #f4f4f4;
 }
 
 .activity-card h3 {
@@ -57,6 +52,47 @@
   font-size: 13px;
   color: #555;
   margin-bottom: 4px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-link {
+  padding: 5px 12px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-link:hover {
+  background: #f0f0f0;
+}
+
+.btn-action {
+  padding: 5px 12px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.btn-action:hover {
+  background: #f0f0f0;
+}
+
+.btn-action:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .detail-card {
@@ -72,19 +108,30 @@
   color: #444;
 }
 
+.filter-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
 .filter-input {
-  width: 100%;
+  flex: 1;
   padding: 8px 10px;
   border: 1px solid #ccc;
   border-radius: 2px;
   font-size: 14px;
   font-family: inherit;
-  margin-bottom: 20px;
 }
 
 .filter-input:focus {
   outline: none;
   border-color: #888;
+}
+
+.error-text {
+  color: #c00;
+  font-size: 13px;
+  margin-bottom: 12px;
 }
 
 .back-btn {
@@ -95,6 +142,7 @@
   border-radius: 2px;
   font-size: 13px;
   color: #333;
+  cursor: pointer;
 }
 
 .back-btn:hover {
