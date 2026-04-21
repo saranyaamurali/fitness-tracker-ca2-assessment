@@ -6,14 +6,11 @@ const ActivityCard = ({ activity }) => {
   const navigate = useNavigate();
   const { toggleGoal } = useActivity();
 
-  const steps = Number(activity.steps) > 0 ? activity.steps : 0;
+  const steps = Number(activity.steps);
   const autoGoal = steps >= 8000;
 
   return (
-    <div
-      className="activity-card"
-      data-testid="activity-item"
-    >
+    <div className="activity-card" data-testid="activity-item">
       <h3>{activity.name || "Unknown"}</h3>
       <p>Date: {activity.date || "No Date"}</p>
       <p>Steps: {activity.steps}</p>
@@ -27,13 +24,14 @@ const ActivityCard = ({ activity }) => {
         >
           View Details
         </button>
-        <button
-          onClick={() => toggleGoal(activity.activityId)}
-          className="btn-action"
-          disabled={autoGoal && activity.goalAchieved}
-        >
-          {activity.goalAchieved ? "Mark Not Achieved" : "Mark Achieved"}
-        </button>
+        {!activity.goalAchieved && (
+          <button
+            onClick={() => toggleGoal(activity.activityId)}
+            className="btn-action"
+          >
+            {autoGoal ? "Auto Achieve" : "Mark Achieved"}
+          </button>
+        )}
       </div>
     </div>
   );
