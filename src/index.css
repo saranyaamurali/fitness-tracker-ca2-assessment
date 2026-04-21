@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Georgia, serif;
+  background-color: #f9f9f9;
+  color: #222;
+}
+
+#root {
+  width: 700px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
